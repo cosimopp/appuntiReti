@@ -1,0 +1,200 @@
+<!--
+    Special chars
+    & -> &#38;
+    > -> &#62;
+    < -> &#60;
+-->
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+    <style>
+    img {
+        width: 600px;
+        height: auto;
+    }
+    </style>
+    </head>
+    <body>
+    <b>Scheda di rete</b>
+    <ul>
+        <li>componente hardware per codificare/trasmettere e ricevere/decodificare i dati in bit dal calcolatore alla rete, e viceversa (segnale analogico &#60;-&#62; digitale)</li>
+        <li>ogni scheda di rete ha un proprio univoco identificativo -&#62; MAC address (Medium Access Controll)
+        <!--sublist-->
+        <ul>
+            <li>(&#38; IMEI (nternational Mobile Equipment Identity) It’s a unique number for identifying a device on a mobile network)</li>
+            <li>protocollo di livello due</li>
+            <ul>
+            <li>protocollo = gestione di un tipo di busta</li>
+            </ul>
+            <li>per inviare un messaggio in broadcast -&#62; ff:ff:ff:ff:ff:ff</li>
+            <ul>
+                <li>nomi logici per la macchina (IP)</li>
+            </ul>
+        </ul>
+        </li>
+        <li>etere &#60;-&#62; modalità promiscua per gli <u>host</u> =&#62; sniffing altrimenti msg dropped</li>
+    </ul>
+    <b>Connettore di rete</b>
+    <ul>
+        <li>e.g. connettore RJ45</li>
+        <li>interfaccia standard che permette di collegare la scheda di rete al link trasmissivo.</li>
+    </ul>
+    <b>Link trasmissivo</b>
+    <ul>
+        <li>(Per propagazione di segnale elettrico tra le varie schede di rete)</li>
+        <li>(per ogni medium un protocollo diverso)</li>
+        <li>mezzo fisico di trasmissione sul quale viaggiano le informazioni sotto forma di segnale analogico.
+        Possono essere fili di rame, cavi coassiali (tipo di cavi elettrici), fibre ottiche o l’ambiente nel caso delle onde radio.
+        </li>
+        <ul>
+            <li>Cavi o fili metallici: permettono di codificare l’informazione digitale mediante variazioni della corrente elettrica (segnale elettrico), ovvero tramite il trasferimento fisico degli elettroni.
+                Inizialmente la somma delle cariche dei protoni nel nucleo è pari alla somma delle cariche degli elettroni (assestamento randomizzato), pertanto le esponiamo ad una differenza di potenziale alternata (da un estremo all'altro, e viceversa)(varia in modo sinusoidale)(aggiungendo altre cariche da una fonte di energia) in modo tale da sfruttare il lavoro che gli elettroni compiono per migrare da un capo all'altro con una velocità d'impulso quasi pari a quella della luce (elettroni pendolo). La corrente elettrica pertanto viaggia al moto opposto degli elettroni.
+            </li>
+            <li>(+ energia usata per trasmissione, + calore dovuto alla dispersione termica del segnale =&#62; + ritardo perchè il segnale deve essere ricostruito e ritrasmesso =&#62; usare bassa energia)</li>
+            <ul>
+                <img src="./assets/rj45.png">
+                <li>Possono essere doppini in rame intrecciati o cavi coassiali.</li>
+                <li>Prestazioni 1-2 Gbit/s</li>
+                <li>economici ma problemi per coprire lunghe distanze...</li>
+                <li>suscettibili ad interferenze (i.e. onde radio esterne) =&#62; schermature isolanti =&#62; separato da onde</li>
+            </ul>
+            <li>fibre ottiche</li>
+            <ul>
+                <li>cavi dove passano onde luminose (che rimbalzano su specchi) che vengono codificate in base a differenti frequenze di onde le quali per loro natura non si scontrano quindi non si collidono quindi più onde contemporaneamente</li>
+                <li>Presentano le prestazioni migliori (migliaia di Gbit/s), no dispersione del segnale, non subiscono interferenze esterne, ma difficili da maneggiare e costose</li>
+            </ul>
+            <li><b>Wireless</b> (utopica) trasmissione via etere</li>
+            <ul>
+                <li>i segnali vengono propagati tramite onde radio/elettromagnetiche che viaggiano nello spazio</li>
+                <li>Hanno il vantaggio di permettere una comunicazione in mobilita’, ma presentano problemi circa le interferenze (e quindi gli errori), il problema dell’attenuazione del segnale con la
+distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
+                <li>comunicazione tramite antenne speciali che sanno focalizzare le trasmissioni radiofoniche</li>
+            </ul>
+        </ul>
+    </ul>
+
+    <b>Classificazione reti</b>
+    <ul>
+        <li><b>per estensione geografica</b></li>
+        <ul>
+            <li>LAN</li>
+            <li>WAN (Wide Area Network) in grado di coprire nazioni e continenti</li>
+            <li><u>Internet</u> è una rete globale composta dall’unione di reti di vari tipi, connesse tra loro e conformi a un determinato insieme di regole di comunicazione comuni: i protocolli di Internet.</li>
+            <!-- pensare su ulteriore commento su DNS da pdfONE pg 1 DNS != ARP-->
+        </ul>
+        <li><b>per topologia</b> (topologia = pattern riconoscibile)(schemi di connessione dei dispositivi)</li>
+        <ul>
+            <li><b>infrastruttura</b></li>
+            <ul>
+                <li>struttura dei collegamenti fisici tra tutti i dispositivi di una rete</li>
+                <li>Punto a punto: connessione diretta tra due host di una stessa rete</li>
+                <li>Completamente connessa con cammini ridondanti: esiste un collegamento diretto da ogni host ad ogni host. Massimo grado di ridondanza (possibilità di lavorare con n guasti =&#62; + affidabilità) e tolleranza ai guasti ma costi elevati.</li>
+                <li>Minimamente connessa: esiste un cammino da ogni host ad ogni host che eventualmente passa per nodi intermedi. Costi minimi ma grande rischio di partizionamenti di rete visto l’assenza di ridondanza. (e.g. n host collegati con n-1 collegamenti)(prima a sx ha grado di ridondanza 1 perchè anche se si rompe 1 collegamento gli host rimangono comunque connessi)</li>
+                <img src="./assets/p8_2.png">
+                <li>parzialmente connesso (Minimum Spanning Tree)</li>
+                <li>Partizione di rete: isole di host non connesse.</li>
+            </ul>
+            <li><b>ad anello (ring)</b></li>
+            <ul>
+                <li>Ogni host e’ connesso direttamente ai suoi host adiacenti. Esiste quindi un cammino da ogni host ad ogni host. Ogni componente può comunicare con ogni altro componente inviando i segnali attraverso la sequenza di connessioni in senso orario o antiorario.</li>
+                <li>Ha grado di ridondanza pari a uno: se cade un collegamento la rete risulta comunque minimamente connessa e funzionante</li>
+            </ul>
+            <li><b>a stella</b></li>
+            <ul>
+                <li>rete minimamente connessa (mST (minimum Spanning Tree)); gli host non sono connessi direttamente bensì si connettono ad un dispositivo centrale (uno switch o un hub) che propaga il segnale in tutte le direzioni. Questa topologia presenta un alto rischio di partizionamento di rete ed il dispositivo centrale e’ un single point of failure: se si rompe il componente centrale gli host sono tutti partizionati.</li>
+                <ul>
+                    <li>Single point of failure: elemento critico tale che se si rompe non c'è più comunicazione (solitamente nascosto al pubblico)</li>
+                    <li>per definizione il mST non presenta cicli</li>
+                </ul>
+            </ul>
+            <li><b>a bus (mST)</b></li>
+                <ul>
+                    <li>Dispositivi connessi ad un bus comune a tutti; non c’e’ ridondanza; inoltre si presenta il problema di gestire l’accesso al mezzo di comunicazione condiviso: infatti la sovrapposizione di due segnali elettrici comporta la distruzione di entrambi (bus è il bottleneck e non viene tollerata la compresenza di due segnali elettrici diversi =&#62; protocollo (e.g. randomizzazione per accesso al medium))</li>
+                </ul>
+            <li><b>ad albero</b></li>
+            <ul>
+                <li>organizzazione gerarchica delle connessioni in cui ogni nodo puo’ comunicare direttamente con i suoi figli diretti.</li>
+            </ul>
+            <li><b>a grafo (o a maglia)</b></li>
+            <ul>
+                <li>combinazione di queste topologie diverse collegate tra loro</li>
+            </ul>
+        </ul>
+    </ul>
+    <b>Canali (logici) di comunicazione di rete</b> - virtualizzazione/visione astratta del mezzo fisico di trasmissione
+    <ul>
+        <li>Un singolo mezzo fisico trasmissivo può essere visto come un insieme di canali logici virtuali.</li>
+        <li>Esistono due tipologie di canale:</li>
+        <ul>
+            <li>Canale punto a punto</li>
+            <ul>
+                <li>canale logico riservato (quindi a loro completa disposizione ma molti tempi morti inutilizzati quindi spreco risorse) per far comunicare direttamente due soli host. Non bisogna specificare indirizzo del destinatario</li>
+                <li><b>filtro passabanda</b></li>
+                <ul>
+                    <li>isolare frequenze tramite filtro</li>
+                    <li>ogni colore è una frequenza diversa per consentire + comunicazioni parallele</li>
+                </ul>
+            </ul>
+            <li>Canale ad accesso multiplo (broadcast)</li>
+            <ul>
+                <li>Tutti i dispositivi ricevono e trasmettono sullo stesso unico canale, e ciò che trasmette uno arriva a tutti. Il canale richiede arbitraggio per evitare collisioni distruttive dovute alla stessa frequenza dei segnali, dovute alla sovrapposizione di segnali che transitano nello stesso momento sul canale, e che porta alla distruzione di entrambi (problematica da gestire anche nei canali punto a punto (signaling vs polling)).</li>
+                <li>Occorre specificare MAC del mittente e destinatario ("da chi e per chi?")</li>
+            </ul>
+            <img src="./assets/p8_3.png">
+        </ul>
+    </ul>
+    <b>Reti a commutazione di circuito</b>
+    <ul>
+        <li>Per far comunicare due host si riserva un circuito(insieme) di canali logici end-to-end per tutta la durata della comunicazione (e.g. linea telefonica). Pertanto le linee non sono precostruite bensì sono frequenze in quel momento disponibili tra le varie centrali di commutazione che compongono i circuiti. Se non c'è alcuna frequenza disponibile allora la linea è intasata</li>
+        <li>minor ritardo visto che le risorse sono allocate per tutto il tempo, ma bisogna pagare per tutto il tempo che si è connessi anche se non si trasmettono dati (e.g. momenti di sospiro)</li>
+        <img src="./assets/p8_4.png">
+    </ul>
+    <b>Reti a commutazione di pacchetto</b>
+    <ul>
+        <li>I dati vengono divisi in pacchetti indipendenti (ogni pacchetto deve contenere gli indirizzi di mittente e destinatario), spediti sul canale ad accesso multiplo ed affidati a dispositivi chiamati commutatori di pacchetto che li faranno arrivare a destinazione. In questo modo la rete risulta utilizzata al meglio fino a saturazione, si trasmette solo quando si ha necessita’ di farlo e non si allocano risorse inutilmente.</li>
+        <li>+ ritardo di comunicazione ma - costi perchè sono allocati più utenti sullo stesso canale condiviso e l'utente paga per numero di pacchetti che ha trasmesso e ricevuto</li>
+        <li>Il canale viene condiviso tra più flussi di pacchetti, quindi sono richieste meno risorse (canali)</li>
+        <li>(È possibile che alcuni pacchetti arrivino nell’ordine sbagliato o vengano persi (e.g, quando buffer ricezione degli host intermedi è pieno(store and/or forward da parte dei router, e ritmi di entrata diversi da ritmi di uscita)))</li>
+        <img src="./assets/img-3.png">
+        <li><b>Servizi orientati alla connessione e non</b></li>
+        <ul>
+            <li>I servizi offerti dalle reti a commutazione di pacchetto dipendono dalle proprieta’ dei protocolli utilizzati e possono essere:</li>
+            <ul>
+                <li><b>Connection oriented</b>: i dati vengono spediti e ricevuti in ordine, inoltre arrivano senza errori e vengono rispediti i pacchetti andati perduti (quindi servizi che non perdono i pacchetti)(TCP)</li>
+                <li><b>Connection-less</b>: : i dati vengono affidati alla rete che per definizione e’ un servizio non orientato alla connessione; i pacchetti potrebbero seguire strade diverse per arrivare a destinazione e arrivare disordinati rispetto all’ordine di invio, non arrivare o arrivare sbagliati/corrotti (UDP)</li>
+            </ul>
+        </ul>
+    </ul>
+    <b>Protocolli e stack ISO/OSI</b> (protocolli di rete organizzati a livelli)
+    <ul>
+        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono il formato dei messaggi scambiati e le decisione su quando e come inviare i messaggi</li>
+        <li>Un protocollo è creato per risolvere una specifica problematica di rete; e' controproducente creare un unico protocollo rigido che copra tutte le possibili finalità di una comunicazione (e.g. UDP o TCP?). Ha invece senso definire classi di protocolli, deputate a gestire determinate funzioni della comunicazione.</li>
+        <li>L'obiettivo è fornire compatibilità tra dispositivi diversi conformi però ad uno stesso standard.</li>
+        <li><b>standard ISO/OSI</b></li>
+        <ul>
+            <li>Le classi di protocolli sono raggruppate in (7) livelli, e ogni livello gestisce una fase della comunicazione. Un livello x fornisce servizi/astrazioni al livello x+1, tramite un'interfaccia comune a tutti i protocolli del livello sovrastante, e richiede servizi/astrazioni offertogli dal livello x-1, tramite un'interfaccia comune a tutti i protocolli del livello sottostante.</li>
+            <ol reversed>
+                <li><b>livello applicazione</b></li>
+                <li><b>livello presentazione</b></li>
+                <li><b>livello sessione</b></li>
+                <li><b>livello trasporto</b></li>
+                <li><b>livello rete</b></li>
+                <ul>
+                    <li>IP, Internet Protocol</li>
+                    <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici del mittente e destinatario) e instradamento dei datagrammi TOCHECK pacchetti o datagrammi? Solo IPv4 frammenta?</li>
+                </ul>
+                <li><b>livello data link</b> (MAC/LLC)</li>
+                <ul>
+                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei pacchetti tra nodi adiacenti all'host nella rete. TOCHECK A questo livello i datagrammi sono divisi in frame</li>
+                </ul>
+                <li><b>livello fisico</b></li>
+                <ul>
+                    <li>Si occupa di codifica&#38;trasmissione e decodifica&#38;ricezione dei segnali &#60;-&#62; bit (tradurre i segnali in bit, e viceversa) sul canale trasmissivo</li>
+trasmissione sul canale trasmissivo</li>
+                </ul>
+            </ol>
+            <img src="./assets/p10_6.png">
+        </ul>
+    </ul>
+    </body>
+</html>
