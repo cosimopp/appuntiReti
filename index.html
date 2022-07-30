@@ -10,7 +10,7 @@
     <style>
     img {
         width: 600px;
-        height: auto;
+        max-height: 500px;
     }
     </style>
     </head>
@@ -23,21 +23,42 @@
             <ul>
                 <li>Il <b>throughput</b> è la capacità <u>effettiva</u> del collegamento, che riguarda la sola trasmissione dei dati in bit dei messaggi inviati con successo al secondo da mittente a destinatario (quindi senza headers, o altri overhead).</li>
                 <li>La capacità effettiva non è da confondersi con la "capacità" del link: sia la capacità che il throughput si esprimono in bit/s, ma, mentre la prima esprime la frequenza trasmissiva massima alla quale i dati possono viaggiare, il throughput è un indice dell'"effettivo" utilizzo della capacità del link.</li>
+                <li>throughput = capacità di trasmissione – overhead del protocolli – eventuali errori di comunicazione. </li>
+                <li><u>Il throughput è anche influenzato dal jitter.</u></li>
             </ul>
             <li>dal <b>ritardo di collegamento</b> ovvero il tempo richiesto per far transitare i dati dal mittente al destinatario, condizionato dalla distanza fisica e dai tempi di gestione stabiliti dai protocolli di comunicazione usati.</li>
             <ul>
-                <li></li>
+                <li>Il <b>jitter</b> è l'indice di <u>variazione</u> nel tempo del ritardo di rete (misurazione empirica delle variazioni sui RTTs dei dati trasmessi?)</li>
+                <li>se jitter elevato =&#62; ritardo NON costante, il flusso di dati non è costante quindi avrò un'esperienza meno fluida; avrò momenti in cui si trasmettono molti bit e momenti in cui invece se ne trasmettono pochi</li>
+                <ul>
+                    <li>Un jitter elevato comporta la bufferizzazione della comunicazione per consegnarla all'utente in modo costante/al ritmo giusto (<b>Playout buffering</b>)</li>
+                    <ul>
+                        <li>Per playout buffering si intende la memorizzazione temporanea, al lato ricevente di un’applicazione, dei pacchetti in arrivo in modo da compensare la variabilità dei ritardi con cui giungono questi pacchetti ed in modo tale da consentire una riproduzione dell’informazione in essi contenuta che sia la più fedele possibile a quella presente al lato mittente dell’applicazione.</li>
+                    </ul>
+                </ul>
             </ul>
+            <li>Il Round Trip Time (<b>RTT</b>) nelle telecomunicazioni è il tempo che intercorre tra l'invio di un segnale e la ricezione della conferma di arrivo dello stesso.</li>
         </ul>
     </ul>
+    <h2>Componenti necessarie di un host per connettersi</h2>  
     <b>Scheda di rete</b>
     <ul>
-        <li>componente hardware per codificare/trasmettere e ricevere/decodificare i dati in bit dal calcolatore alla rete, e viceversa (segnale analogico &#60;-&#62; digitale)</li>
-        <li>ogni scheda di rete ha un proprio univoco identificativo -&#62; MAC address (Medium Access Controll)
+        <li>componente hardware per codificare/trasmettere e ricevere/decodificare i dati in bit dal calcolatore alla rete, e viceversa (segnale analogico &#60;-&#62; digitale), nel formato che supporta il link trasmissivo</li>
+        <li>(È amministrata dai driver, ovvero componenti software del sistema operativo che permettono di fare specifiche syscall.)</li>
+        <li>ogni scheda di rete ha un proprio codice identificativo univoco (idealmente) non modificabile assegnato dai costruttori della scheda di rete-&#62; MAC address (Medium Access Controll) a 48 bit in hex</li>
         <!--sublist-->
         <ul>
+            <li>E' dotata di: </li>
+            <ul>
+                <li>interfaccia di collegamento al calcolatore (PCI)</li>
+                <ul>
+                    <li>Peripheral Component Interconnect (PCI) is a local computer bus for attaching hardware devices in a computer</li>
+                </ul>
+                <li>connettore di rete: interfaccia hardware presente sul dispositivo di rete per il collegamento del dispositivo di rete al mezzo di trasmissione della rete</li>
+                <img src="./assets/scheda-di-rete.png">
+            </ul>
             <li>(&#38; IMEI (nternational Mobile Equipment Identity) It’s a unique number for identifying a device on a mobile network)</li>
-            <li>protocollo di livello due</li>
+            <li>Il tipo di scheda dipende dalla tecnologia di trasmissione utilizzata, e i protocolli o lo standard utilizzato per la trasmissione le forniscono il nome (vedi <a href="#protocolliLivelloDue">protocolli di livello due</a>).</li>
             <ul>
             <li>protocollo = gestione di un tipo di busta</li>
             </ul>
@@ -46,19 +67,18 @@
                 <li>nomi logici per la macchina (IP)</li>
             </ul>
         </ul>
-        </li>
         <li>etere &#60;-&#62; modalità promiscua per gli <u>host</u> =&#62; sniffing altrimenti msg dropped</li>
     </ul>
     <b>Connettore di rete</b>
     <ul>
-        <li>e.g. connettore RJ45</li>
+        <li>e.g. connettore RJ45 (cavo rete PC)</li>
         <li>interfaccia standard che permette di collegare la scheda di rete al link trasmissivo.</li>
     </ul>
     <b>Link trasmissivo</b>
     <ul>
         <li>(Per propagazione di segnale elettrico tra le varie schede di rete)</li>
         <li>(per ogni medium un protocollo diverso)</li>
-        <li>mezzo fisico di trasmissione sul quale viaggiano le informazioni sotto forma di segnale analogico.
+        <li>mezzo fisico di trasmissione sul quale viaggiano (e si propagano) le informazioni sotto forma di segnale analogico.
         Possono essere fili di rame, cavi coassiali (tipo di cavi elettrici), fibre ottiche o l’ambiente nel caso delle onde radio.
         </li>
         <ul>
@@ -80,9 +100,9 @@
             </ul>
             <li><b>Wireless</b> (utopica) trasmissione via etere</li>
             <ul>
+                <li>le reti wireless sono dei broadcast naturali.</li>
                 <li>i segnali vengono propagati tramite onde radio/elettromagnetiche che viaggiano nello spazio</li>
-                <li>Hanno il vantaggio di permettere una comunicazione in mobilita’, ma presentano problemi circa le interferenze (e quindi gli errori), il problema dell’attenuazione del segnale con la
-distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
+                <li>Hanno il vantaggio di permettere una comunicazione in mobilita’, ma presentano problemi circa le interferenze (e quindi gli errori), il problema dell’attenuazione del segnale con la distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
                 <li>comunicazione tramite antenne speciali che sanno focalizzare le trasmissioni radiofoniche</li>
             </ul>
         </ul>
@@ -103,10 +123,11 @@ distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
             <ul>
                 <li>struttura dei collegamenti fisici tra tutti i dispositivi di una rete</li>
                 <li>Punto a punto: connessione diretta tra due host di una stessa rete</li>
+                (Connessioni multiple)
                 <li>Completamente connessa con cammini ridondanti: esiste un collegamento diretto da ogni host ad ogni host. Massimo grado di ridondanza (possibilità di lavorare con n guasti =&#62; + affidabilità) e tolleranza ai guasti ma costi elevati.</li>
                 <li>Minimamente connessa: esiste un cammino da ogni host ad ogni host che eventualmente passa per nodi intermedi. Costi minimi ma grande rischio di partizionamenti di rete visto l’assenza di ridondanza. (e.g. n host collegati con n-1 collegamenti)(prima a sx ha grado di ridondanza 1 perchè anche se si rompe 1 collegamento gli host rimangono comunque connessi)</li>
                 <img src="./assets/p8_2.png">
-                <li>parzialmente connesso (Minimum Spanning Tree)</li>
+                <li>parzialmente connesso (Minimum Spanning Tree o più)</li>
                 <li>Partizione di rete: isole di host non connesse.</li>
             </ul>
             <li><b>ad anello (ring)</b></li>
@@ -128,7 +149,7 @@ distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
                 </ul>
             <li><b>ad albero</b></li>
             <ul>
-                <li>organizzazione gerarchica delle connessioni in cui ogni nodo puo’ comunicare direttamente con i suoi figli diretti.</li>
+                <li>organizzazione gerarchica delle connessioni in cui ogni nodo puo’ comunicare direttamente con i suoi figli diretti o col suo genitore.</li>
             </ul>
             <li><b>a grafo (o a maglia)</b></li>
             <ul>
@@ -212,6 +233,22 @@ distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
                 <li><b>livello data link</b> (MAC/LLC)</li>
                 <ul>
                     <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei pacchetti tra nodi adiacenti all'host nella rete. TOCHECK A questo livello i datagrammi sono divisi in frame</li>
+                    <div id="protocolliLivelloDue"><li><b>Tecnologie per schede di rete</b> (protocolli di livello due)</li></div>
+                    <ul>
+                        <li>Ethernet</li>
+                        <ul>
+                            <li>E' un protocollo usato nelle reti locali cablate (adattatore di tipo cablato). La scheda di rete ascolta il canale mentre trasmette il segnale (collision detection). Se viene rilevata una collisione interrompe la trasmissione e riprova dopo un tempo random.</li>
+                        </ul>
+                        <li>IEEE 802.11 (o Wi-Fi)</li>
+                        <ul>
+                            <b>Protocolli MAC (Medium Access Control) nelle reti wireless </b>
+                            <li>Per le reti wireless, non possiamo usare gli stessi protocolli MAC delle reti cablate. Nelle reti wireless, ho il problema delle collisioni dovuto non solo alla comunicazione nello stesso momento, ma anche alla comunicazione nello stesso luogo. La scheda di rete ascolta il canale radio (carrier sensing) e trasmette solo se nessuno sta già trasmettendo (collision avoidance), ma è diverso da ethernet perché non rimane in ascolto mentre trasmette il segnale. Con Wi-Fi non ti puoi accorgere di aver fatto collisione (due dispositivi trasmettano contemporaneamente distruggendo il segnale di entrambi) perchè c'è l'impossibilità pratica di realizzare la rilevazione di collisioni in atto durante la fase di trasmissione poichè non si riesce a controllare fisicamente tutte l'etere. Per prevenire le collisioni si dilazionano le trasmissioni nel tempo.</li>
+                        </ul>
+                        <li>Token ring &#38; Single point of failure</li>
+                        <ul>
+                            <li>Utilizzato con reti con topologia ad anello (cablato), esiste un frame speciale detto token che viene passato come un “testimone” tra i dispositivi, e solo chi detiene il token ha diritto di iniziare una comunicazione. Poi lo si passa al dispositivo successivo. Se chi riceve un messaggio possiede il token, esso può interpretare questo segnale come ACK implicito. In questo modo si annullano le collisioni (garantisce la Quality Of Service). Un problema di questo protocollo è la perdita (o peggio, al ritardo) del token. Infatti se questo viene perso, passato il token rotation time (timeout) di due host, bisogna impedire che se ne rigeneri più di uno (e.g. se uno non sa che un altro lo sta già creando =&#62; pochi (idealmente uno) nodi con timeout e prerogativa di creare token (a discapito dell'efficienza della struttura)).</li>
+                        </ul>
+                    </ul>
                 </ul>
                 <li><b>livello fisico</b></li>
                 <ul>
