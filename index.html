@@ -15,6 +15,21 @@
     </style>
     </head>
     <body>
+    <b>Prestazioni di una rete</b>
+    <ul>
+        <li>Le prestazioni di una rete sono misurate: </li>
+        <ul>
+            <li>dalla <b>capacità di trasmissione</b> ovvero la quantità di dati che è possibile trasmettere o ricevere in un secondo, determinata dalla tecnologia usata in quel momento</li>
+            <ul>
+                <li>Il <b>throughput</b> è la capacità <u>effettiva</u> del collegamento, che riguarda la sola trasmissione dei dati in bit dei messaggi inviati con successo al secondo da mittente a destinatario (quindi senza headers, o altri overhead).</li>
+                <li>La capacità effettiva non è da confondersi con la "capacità" del link: sia la capacità che il throughput si esprimono in bit/s, ma, mentre la prima esprime la frequenza trasmissiva massima alla quale i dati possono viaggiare, il throughput è un indice dell'"effettivo" utilizzo della capacità del link.</li>
+            </ul>
+            <li>dal <b>ritardo di collegamento</b> ovvero il tempo richiesto per far transitare i dati dal mittente al destinatario, condizionato dalla distanza fisica e dai tempi di gestione stabiliti dai protocolli di comunicazione usati.</li>
+            <ul>
+                <li></li>
+            </ul>
+        </ul>
+    </ul>
     <b>Scheda di rete</b>
     <ul>
         <li>componente hardware per codificare/trasmettere e ricevere/decodificare i dati in bit dal calcolatore alla rete, e viceversa (segnale analogico &#60;-&#62; digitale)</li>
@@ -154,33 +169,44 @@ distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
         <li>I dati vengono divisi in pacchetti indipendenti (ogni pacchetto deve contenere gli indirizzi di mittente e destinatario), spediti sul canale ad accesso multiplo ed affidati a dispositivi chiamati commutatori di pacchetto che li faranno arrivare a destinazione. In questo modo la rete risulta utilizzata al meglio fino a saturazione, si trasmette solo quando si ha necessita’ di farlo e non si allocano risorse inutilmente.</li>
         <li>+ ritardo di comunicazione ma - costi perchè sono allocati più utenti sullo stesso canale condiviso e l'utente paga per numero di pacchetti che ha trasmesso e ricevuto</li>
         <li>Il canale viene condiviso tra più flussi di pacchetti, quindi sono richieste meno risorse (canali)</li>
-        <li>(È possibile che alcuni pacchetti arrivino nell’ordine sbagliato o vengano persi (e.g, quando buffer ricezione degli host intermedi è pieno(store and/or forward da parte dei router, e ritmi di entrata diversi da ritmi di uscita)))</li>
+        <li>(È possibile che alcuni pacchetti arrivino nell’ordine sbagliato o vengano persi (e.g, quando buffer ricezione degli host intermedi è pieno(TOMOVE store and forward da parte dei router (per velocizzarli sono esautorati ed è compito del mittente (TCP =&#62; e del destinatario (protocollo end-to-end)) la ritrasmissione (e la notifica) del pacchetto), e ritmi di entrata diversi da ritmi di uscita)))</li>
         <img src="./assets/img-3.png">
         <li><b>Servizi orientati alla connessione e non</b></li>
         <ul>
             <li>I servizi offerti dalle reti a commutazione di pacchetto dipendono dalle proprieta’ dei protocolli utilizzati e possono essere:</li>
             <ul>
-                <li><b>Connection oriented</b>: i dati vengono spediti e ricevuti in ordine, inoltre arrivano senza errori e vengono rispediti i pacchetti andati perduti (quindi servizi che non perdono i pacchetti)(TCP)</li>
+                <li><b>Connection oriented</b>: i dati vengono spediti e ricevuti in ordine, inoltre arrivano senza errori e vengono rispediti i pacchetti andati perduti (quindi servizi che non perdono i pacchetti (connessione affidabile))(TCP)</li>
                 <li><b>Connection-less</b>: : i dati vengono affidati alla rete che per definizione e’ un servizio non orientato alla connessione; i pacchetti potrebbero seguire strade diverse per arrivare a destinazione e arrivare disordinati rispetto all’ordine di invio, non arrivare o arrivare sbagliati/corrotti (UDP)</li>
             </ul>
         </ul>
     </ul>
     <b>Protocolli e stack ISO/OSI</b> (protocolli di rete organizzati a livelli)
     <ul>
-        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono il formato dei messaggi scambiati e le decisione su quando e come inviare i messaggi</li>
+        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono il formato dei messaggi scambiati e le decisioni su quando e come inviare i messaggi</li>
         <li>Un protocollo è creato per risolvere una specifica problematica di rete; e' controproducente creare un unico protocollo rigido che copra tutte le possibili finalità di una comunicazione (e.g. UDP o TCP?). Ha invece senso definire classi di protocolli, deputate a gestire determinate funzioni della comunicazione.</li>
         <li>L'obiettivo è fornire compatibilità tra dispositivi diversi conformi però ad uno stesso standard.</li>
         <li><b>standard ISO/OSI</b></li>
         <ul>
-            <li>Le classi di protocolli sono raggruppate in (7) livelli, e ogni livello gestisce una fase della comunicazione. Un livello x fornisce servizi/astrazioni al livello x+1, tramite un'interfaccia comune a tutti i protocolli del livello sovrastante, e richiede servizi/astrazioni offertogli dal livello x-1, tramite un'interfaccia comune a tutti i protocolli del livello sottostante.</li>
+            <li>Le classi di protocolli sono raggruppate in (7) livelli organizzati a stack (per scalabilità (push) e modularità), e ogni livello gestisce una fase della comunicazione. Un livello x fornisce servizi/astrazioni al livello x+1, tramite un'interfaccia comune a tutti i protocolli del livello sovrastante, e richiede servizi/astrazioni offertogli dal livello x-1, tramite un'interfaccia comune a tutti i protocolli del livello sottostante. Se violassimo queste regole si tenderebbe allo spaghetti code e duplicazione del codice.</li>
             <ol reversed>
                 <li><b>livello applicazione</b></li>
-                <li><b>livello presentazione</b></li>
-                <li><b>livello sessione</b></li>
-                <li><b>livello trasporto</b></li>
-                <li><b>livello rete</b></li>
                 <ul>
-                    <li>IP, Internet Protocol</li>
+                    <li>fornisce alle applicazioni in esecuzione su calcolatori remoti le primitive per comunicare. A questo livello le applicazioni si scambiano dati tramite i protocolli di questo livello, e questi pacchetti di informazione sono detti messaggi</li>
+                </ul>
+                <li><b>livello presentazione</b></li>
+                <ul>
+                    <li>risolve eventuali eterogeneita’ del formato dei dati</li>
+                </ul>
+                <li><b>livello sessione</b></li>
+                <ul>
+                    <li>mantiene e gestisce lo stato attuale del collegamento tra due applicazioni remote.</li>
+                </ul>
+                <li><b>livello trasporto</b></li>
+                <ul>
+                    <li>fornisce i servizi orientati alla connessione e non, controlla la congestione della rete (TOCHECK dei buffer o del prossimo buffer?). In questo livello i messaggi vengono spezzati in segmenti/datagrammi.</li>
+                </ul>
+                <li><b>livello rete</b> (IP, Internet Protocol)</li>
+                <ul>
                     <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici del mittente e destinatario) e instradamento dei datagrammi TOCHECK pacchetti o datagrammi? Solo IPv4 frammenta?</li>
                 </ul>
                 <li><b>livello data link</b> (MAC/LLC)</li>
@@ -190,7 +216,6 @@ distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
                 <li><b>livello fisico</b></li>
                 <ul>
                     <li>Si occupa di codifica&#38;trasmissione e decodifica&#38;ricezione dei segnali &#60;-&#62; bit (tradurre i segnali in bit, e viceversa) sul canale trasmissivo</li>
-trasmissione sul canale trasmissivo</li>
                 </ul>
             </ol>
             <img src="./assets/p10_6.png">
