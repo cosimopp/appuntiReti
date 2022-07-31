@@ -10,7 +10,7 @@
     <style>
     img {
         width: 600px;
-        max-height: 500px;
+        max-height: 450px;
     }
     </style>
     </head>
@@ -85,6 +85,7 @@
             <li>Cavi o fili metallici: permettono di codificare l’informazione digitale mediante variazioni della corrente elettrica (segnale elettrico), ovvero tramite il trasferimento fisico degli elettroni.
                 Inizialmente la somma delle cariche dei protoni nel nucleo è pari alla somma delle cariche degli elettroni (assestamento randomizzato), pertanto le esponiamo ad una differenza di potenziale alternata (da un estremo all'altro, e viceversa)(varia in modo sinusoidale)(aggiungendo altre cariche da una fonte di energia) in modo tale da sfruttare il lavoro che gli elettroni compiono per migrare da un capo all'altro con una velocità d'impulso quasi pari a quella della luce (elettroni pendolo). La corrente elettrica pertanto viaggia al moto opposto degli elettroni.
             </li>
+            <li>Qualsiasi filo è un'antenna perchè una carica im movimento crea un campo magnetico =&62; gabbia di Faraday per isolarlo per non creare interferenze agli altri.</li>
             <li>(+ energia usata per trasmissione, + calore dovuto alla dispersione termica del segnale =&#62; + ritardo perchè il segnale deve essere ricostruito e ritrasmesso =&#62; usare bassa energia)</li>
             <ul>
                 <img src="./assets/rj45.png">
@@ -206,12 +207,12 @@
     </ul>
     <b>Protocolli e stack ISO/OSI</b> (protocolli di rete organizzati a livelli)
     <ul>
-        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono un formato (non ambiguo) dei messaggi scambiati e le decisioni su quando e come inviare i messaggi</li>
+        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono un formato (non ambiguo) dei messaggi scambiati e le procedure per decidere quando e come inviare i dati</li>
         <li>Un protocollo è creato per risolvere una specifica problematica di rete; e' controproducente creare un unico protocollo rigido che copra tutte le possibili finalità di una comunicazione (e.g. UDP o TCP?). Ha invece senso definire classi di protocolli, deputate a gestire determinate funzioni della comunicazione.</li>
         <li>L'obiettivo è fornire compatibilità tra dispositivi diversi conformi però ad uno stesso standard.</li>
-        <li><b>standard ISO/OSI</b></li>
+        <li><b>standard ISO/OSI RM</b>  (Open System Interconnection Reference Model)</li>
         <ul>
-            (Architettura dei protocolli per comunicazione di rete (e Internet))
+            (Architettura standard dei protocolli organizzati a livelli per comunicazione di rete (e Internet stack (IP/TCP)(no livello 5 e 6)))
             <ul>
                 <li><font color="red">S</font>ome (Segments)</li>
                 <li><font color="red">P</font>eople (Packets)</li>
@@ -220,34 +221,46 @@
             </ul>
             <li>Le classi di protocolli sono raggruppate in (7) livelli organizzati a stack (per scalabilità (push) e modularità), e ogni livello gestisce una fase della comunicazione. Un livello x fornisce servizi/astrazioni al livello x+1, tramite un'interfaccia comune a tutti i protocolli del livello sovrastante, e richiede servizi/astrazioni offertogli dal livello x-1, tramite un'interfaccia comune a tutti i protocolli del livello sottostante. Se violassimo queste regole si tenderebbe allo spaghetti code e duplicazione del codice.</li>
             <ol reversed>
-                <li><b>livello applicazione</b></li>
+                <li><b>livello applicazione</b> (in SO(ftware))</li>
                 <ul>
-                    <li>fornisce alle applicazioni in esecuzione su calcolatori remoti le primitive per comunicare. A questo livello le applicazioni si scambiano dati tramite i protocolli di questo livello, e questi pacchetti di informazione sono detti messaggi</li>
+                    <li>fornisce alle applicazioni in esecuzione su calcolatori remoti le primitive (API) per comunicare. A questo livello le applicazioni si scambiano dati tramite i protocolli di questo livello, e questi dati sono detti messaggi</li>
                 </ul>
-                <li><b>livello presentazione</b></li>
+                <li><b>livello presentazione</b> (in SO)</li>
                 <ul>
                     <li>risolve eventuali eterogeneita’ del formato dei dati tra i nodi della rete.</li>
                     <ul>
                     <li>trasformare i dati forniti dal livello di applicazione in un formato standard</li>
                     <li>gestione della sintassi e della semantica delle informazioni trasmesse, diversamente dagli altri livelli che gestiscono una sequenza di bit.</li>
-                    <li>si occupa di rendere compatibili le rappresentazioni dei dati negli scambi tra computer che utilizzano codifiche diverse (e.g. Endianess &#38; comunicazione indipendente da sistemi operativi differenti tra i due host)</li>
+                    <li>si occupa di rendere compatibili le rappresentazioni dei dati (vedere stesso risultato) negli scambi tra computer che utilizzano codifiche diverse (e.g. Endianess &#38; comunicazione indipendente da sistemi operativi differenti tra i due host)</li>
                     </ul>
                 </ul>
-                <li><b>livello sessione</b></li>
+                <li><b>livello sessione</b> (in SO)</li>
                 <ul>
-                    <li>mantiene e gestisce lo stato attuale del collegamento tra due applicazioni remote.</li>
+                    <li>mantiene e gestisce lo stato attuale del collegamento tra due applicazioni remote (tiene traccia di quello che è accaduto)</li> 
                 </ul>
-                <li><b>livello trasporto</b></li>
+                <li><b>livello trasporto</b> (in SO)</li>
                 <ul>
                     <li>fornisce i servizi orientati alla connessione e non, controlla la congestione della rete (TOCHECK dei buffer o del prossimo buffer?). In questo livello i messaggi vengono spezzati in segmenti/datagrammi.</li>
+                    <li><b>TCP</b></li>
+                    <ul>
+                        <li>(SMTP (Simple Mail Transfer Protocol), HTTP (Hyper Text Transfer Protocol))</li>
+                    </ul>
+                    <li><b>UDP</b></li>
+                TOCHECK decide il cammino sul quale inviare il pacchetto a seconda dell’indirizzo del destinatario, garantisce una connessione affidabile (incapsula i dati aggiungendo informazioni utili all’ordinamento e al controllo della velocità di invio delle buste e controlla se il SEGMENTO arriva a destinazione, servizio connection oriented). In generale, con connection oriented si intende un servizio o comuncazione in cui prima di inviare i dati si stabilisce una connessione logica fra i due utenti (es. Il 3-way handshake nel caso della TCP).
                 </ul>
-                <li><b>livello rete</b> (IP, Internet Protocol)</li>
+                <li><b>livello rete</b> (IP, Internet Protocol) (in Router)</li>
                 <ul>
-                    <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici del mittente e destinatario) e instradamento dei segmenti/datagrammi in pacchetti TOCHECK Solo IPv4 frammenta?</li>
+                    <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici (IP) del mittente iniziale e destinatario finale(?) (tutto NATtato)), e instradamento dei segmenti/datagrammi in pacchetti verso i nodi intermedi del cammino (i <b>router</b>)
+                        <ul>
+                            <li>rappresentanti della loro rete e gestori degli host di tale rete che vogliono comunicare con l'esterno o con un altro host di questa rete</li>
+                            <li>smistano i pacchetti delle altre (sotto)reti</li>
+                            <li>store and forward</li>
+                        </ul>TOCHECK Solo IPv4 frammenta? mittente e destinatario logici cambiano con instradamento o avviene solo con MAC (prossimo MAC e a chi inviare l'ack(tra MAC c'è invia di ACK?))? (Indirizzo del prossimo MAC) decide il cammino sul quale inviare il pacchetto a seconda dell’indirizzo del destinatario
+                    </li> 
                 </ul>
-                <li><b>livello data link</b> (MAC/LLC)</li>
+                <li><b>livello data link</b> (MAC/LLC (LLC = Logical Link Control)) (in Hub/Switch/scheda rete)</li>
                 <ul>
-                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei frame tra nodi adiacenti all'host nella rete. TOCHECK A questo livello i pacchetti sono divisi in frame</li>
+                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei frame tra nodi adiacenti all'host nella rete (LLC). A questo livello i pacchetti sono divisi in frame</li>
                     <div id="protocolliLivelloDue"><li><b>Tecnologie per schede di rete</b> (protocolli di livello due)</li></div>
                     <ul>
                         <li>Ethernet</li>
@@ -261,16 +274,23 @@
                         </ul>
                         <li>Token ring &#38; Single point of failure</li>
                         <ul>
-                            <li>Utilizzato con reti con topologia ad anello (cablato), esiste un frame speciale detto token che viene passato come un “testimone” tra i dispositivi, e solo chi detiene il token ha diritto di iniziare una comunicazione. Poi lo si passa al dispositivo successivo. Se chi riceve un messaggio possiede il token, esso può interpretare questo segnale come ACK implicito. In questo modo si annullano le collisioni (garantisce la Quality Of Service). Un problema di questo protocollo è la perdita (o peggio, al ritardo) del token. Infatti se questo viene perso, passato il token rotation time (timeout) di due host, bisogna impedire che se ne rigeneri più di uno (e.g. se uno non sa che un altro lo sta già creando =&#62; pochi (idealmente uno) nodi con timeout e prerogativa di creare token (a discapito dell'efficienza della struttura)).</li>
+                            <li>Utilizzato con reti con topologia ad anello (cablato), esiste un frame speciale detto token che viene passato come un “testimone” tra i dispositivi, e solo chi detiene il token ha diritto di iniziare una comunicazione. Poi lo si passa al dispositivo successivo. Se chi riceve un messaggio possiede il token, esso può interpretare questo segnale come ACK implicito. In questo modo si annullano le collisioni (garantisce il servizio (Quality Of Service)). Un problema di questo protocollo è la perdita (o peggio, al ritardo) del token. Infatti se questo viene perso, passato il token rotation time (timeout) di due host, bisogna impedire che se ne rigeneri più di uno (e.g. se uno non sa che un altro lo sta già creando =&#62; pochi (idealmente uno) nodi con timeout e prerogativa di creare token (a discapito dell'efficienza della struttura)).</li>
                         </ul>
                     </ul>
                 </ul>
-                <li><b>livello fisico</b></li>
+                <li><b>livello fisico</b> (in scheda rete)</li>
                 <ul>
-                    <li>Si occupa di codifica&#38;trasmissione e decodifica&#38;ricezione dei segnali &#60;-&#62; bit (tradurre i segnali in bit, e viceversa) sul canale trasmissivo</li>
+                    <li>Si occupa di codifica&#38;trasmissione e decodifica&#38;ricezione dei dati da bit a segnali analogici (tradurre un tipo di segnale in bit, e viceversa) sul canale trasmissivo</li>
+                    <li></li>
                 </ul>
             </ol>
             <img src="./assets/p10_6.png">
+            <br>
+            <li>In trasmissione, ogni livello riceve dati dai livelli superiori e li inserisce (incapsula) in “buste” con dati aggiuntivi, utili ad istruire il corrispondente livello del dispositivo ricevente</li>
+            <li>In ricezione, ogni livello verifica i dati della busta più esterna, agisce di conseguenza, e passa il contenuto della busta ai livelli superiori.</li>
+            <li>TODO router/nodi intermedi pg 9 pdfONE</li>
+            (le code sono gli hashing dei dati aggiuntivi (header) della busta corrispondente per verificare che siano stati ricevuti correttamente (e.g. no errori causati dalle interferenze dell'ambiente))
+            <img src="./assets/p11_7.png">
         </ul>
     </ul>
     </body>
