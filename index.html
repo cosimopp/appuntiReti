@@ -176,7 +176,7 @@
             </ul>
             <li>Canale ad accesso multiplo (broadcast)</li>
             <ul>
-                <li>Tutti i dispositivi ricevono e trasmettono sullo stesso unico canale, e ciò che trasmette uno arriva a tutti. Il canale richiede arbitraggio per evitare collisioni distruttive dovute alla stessa frequenza dei segnali, quindi alla sovrapposizione di segnali che transitano nello stesso momento sul canale, e che porta alla distruzione di entrambi (problematica da gestire anche nei canali punto a punto (signaling vs polling)).</li>
+                <li>Tutti i dispositivi ricevono e trasmettono sullo stesso unico canale, e ciò che trasmette uno arriva a tutti. Il canale richiede arbitraggio per evitare collisioni distruttive dovute alla stessa frequenza dei segnali, ovvero alla sovrapposizione di segnali che transitano nello stesso momento sul canale, e che porta alla distruzione di entrambi (problematica da gestire anche nei canali punto a punto (signaling vs polling)).</li>
                 <li>Occorre specificare MAC del mittente e destinatario ("da chi e per chi?")(indirizzamento esplicito per ogni pacchetto trasmesso)</li>
             </ul>
             <img src="./assets/p8_3.png">
@@ -185,32 +185,39 @@
     <b>Reti a commutazione di circuito</b> (circuit switched)
     <ul>
         <li>Prima di far comunicare due host si crea/si riserva un circuito(insieme) di canali logici end-to-end per tutta la durata della comunicazione (e.g. linea telefonica). Pertanto le linee non sono precostruite bensì sono frequenze in quel momento disponibili tra le varie centrali di commutazione che compongono i circuiti. Se non c'è alcuna frequenza disponibile allora la linea è intasata</li>
-        <li>minor ritardo di comunicazione visto che le risorse sono allocate per tutto il tempo, ma bisogna pagare per tutto il tempo che si è connessi anche se non si trasmettono dati sul canale(e.g. momenti di sospiro)</li>
+        <li>minor ritardo di comunicazione visto che le risorse sono riservate/dedicate ai soli due host per tutto il tempo, ma bisogna pagare per tutto il tempo che si è connessi (/tenere la risorsa occupata) anche se non si trasmettono dati sul canale(e.g. momenti di sospiro)</li>
         <img src="./assets/p8_4.png">
     </ul>
     <b>Reti a commutazione di pacchetto</b> (packet switched (e.g. rete internet))
     <ul>
-        <li>I dati vengono divisi in pacchetti indipendenti (ogni pacchetto deve contenere gli indirizzi di mittente e destinatario), spediti sul canale ad accesso multiplo ed affidati a dispositivi chiamati commutatori di pacchetto che li faranno arrivare a destinazione. In questo modo la rete risulta utilizzata al meglio fino a saturazione, si trasmette solo quando si ha necessita’ di farlo e non si allocano risorse inutilmente.</li>
-        <li>+ ritardo di comunicazione ma - costi perchè sono allocati più utenti sullo stesso canale condiviso e l'utente paga per numero di pacchetti che ha trasmesso e ricevuto</li>
-        <li>Il canale viene condiviso tra più flussi di pacchetti, quindi sono richieste meno risorse (canali)</li>
-        <li>(È possibile che alcuni pacchetti arrivino nell’ordine sbagliato o vengano persi (e.g, quando buffer ricezione degli host intermedi è pieno(TOMOVE store and forward da parte dei router (per velocizzarli sono esautorati ed è compito del mittente (TCP =&#62; e del destinatario (protocollo end-to-end)) la ritrasmissione (e la notifica) del pacchetto), e ritmi di entrata diversi da ritmi di uscita)))</li>
+        <li>I dati vengono divisi in pacchetti indipendenti (ogni pacchetto deve contenere gli indirizzi di mittente e destinatario), spediti separatamente sul canale ad accesso multiplo broadcast ed affidati a dispositivi chiamati commutatori di pacchetto che li faranno arrivare a destinazione. In questo modo l'ISP (Internet Service Provider) cercherà di utilizzare la rete al meglio fino a saturazione (TOCHECK: perchè non completamente ("quasi al 100%")), allocando dinamicamente in maniera distribuita gli utenti ai vari canali di volta in volta, e si trasmette solo quando si ha necessita’ di farlo.</li>
+        <li>+ ritardo di comunicazione (e.g. ritardo di accodamento) ma - costi (sia per il provider e per il cliente) perchè sono allocati più utenti sullo stesso canale condiviso e l'utente paga per numero di pacchetti che ha scambiato (trasmesso e ricevuto)</li>
+        <li>Il canale viene condiviso tra più flussi di pacchetti, quindi sono richieste meno risorse (-canali)</li>
+        <li>(È possibile che alcuni pacchetti arrivino nell’ordine sbagliato o vengano persi (e.g, quando buffer ricezione degli host intermedi è pieno (store and forward (ad ogni nodo intermedio i pacchetti vengono temporaneamente immagazzinati e inoltrati verso destinatario finale) da parte dei router (per velocizzarli sono molto esautorati e.g. il mittente (se TCP =&#62; anche il destinatario) (protocollo end-to-end) sono coinvolti per la ritrasmissione (e la notifica) del pacchetto); ritmi di entrata diversi da ritmi di uscita)))</li>
         <img src="./assets/img-3.png">
         <li><b>Servizi orientati alla connessione e non</b></li>
         <ul>
             <li>I servizi offerti dalle reti a commutazione di pacchetto dipendono dalle proprieta’ dei protocolli utilizzati e possono essere:</li>
             <ul>
-                <li><b>Connection oriented</b>: i dati vengono spediti e ricevuti in ordine, inoltre arrivano senza errori e vengono rispediti i pacchetti andati perduti (quindi servizi che non perdono i pacchetti (connessione affidabile))(TCP)</li>
-                <li><b>Connection-less</b>: : i dati vengono affidati alla rete che per definizione e’ un servizio non orientato alla connessione; i pacchetti potrebbero seguire strade diverse per arrivare a destinazione e arrivare disordinati rispetto all’ordine di invio, non arrivare o arrivare sbagliati/corrotti (UDP)</li>
+                <li><b>Connection oriented</b>: i dati vengono spediti e ricevuti in ordine, inoltre arrivano senza errori e vengono rispediti i pacchetti andati perduti (quindi servizi che non perdono i pacchetti (connessione affidabile))(TCP). Un protocollo connection oriented si può basare su un protocollo connection-less.</li>
+                <li><b>Connection-less</b>: i dati vengono affidati alla rete che per definizione e’ un servizio non orientato alla connessione; i pacchetti potrebbero seguire strade diverse per arrivare a destinazione e arrivare disordinati rispetto all’ordine di invio, non arrivare o arrivare sbagliati/corrotti (UDP)</li>
             </ul>
         </ul>
     </ul>
     <b>Protocolli e stack ISO/OSI</b> (protocolli di rete organizzati a livelli)
     <ul>
-        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono il formato dei messaggi scambiati e le decisioni su quando e come inviare i messaggi</li>
+        <li>Un protocollo e’ un insieme di regole sintattiche (e.g. forma) e semantiche (e.g. significato della forma), e definiscono un formato (non ambiguo) dei messaggi scambiati e le decisioni su quando e come inviare i messaggi</li>
         <li>Un protocollo è creato per risolvere una specifica problematica di rete; e' controproducente creare un unico protocollo rigido che copra tutte le possibili finalità di una comunicazione (e.g. UDP o TCP?). Ha invece senso definire classi di protocolli, deputate a gestire determinate funzioni della comunicazione.</li>
         <li>L'obiettivo è fornire compatibilità tra dispositivi diversi conformi però ad uno stesso standard.</li>
         <li><b>standard ISO/OSI</b></li>
         <ul>
+            (Architettura dei protocolli per comunicazione di rete (e Internet))
+            <ul>
+                <li><font color="red">S</font>ome (Segments)</li>
+                <li><font color="red">P</font>eople (Packets)</li>
+                <li><font color="red">F</font>ear (Frames)</li>
+                <li><font color="red">B</font>ears (Bits)</li>
+            </ul>
             <li>Le classi di protocolli sono raggruppate in (7) livelli organizzati a stack (per scalabilità (push) e modularità), e ogni livello gestisce una fase della comunicazione. Un livello x fornisce servizi/astrazioni al livello x+1, tramite un'interfaccia comune a tutti i protocolli del livello sovrastante, e richiede servizi/astrazioni offertogli dal livello x-1, tramite un'interfaccia comune a tutti i protocolli del livello sottostante. Se violassimo queste regole si tenderebbe allo spaghetti code e duplicazione del codice.</li>
             <ol reversed>
                 <li><b>livello applicazione</b></li>
@@ -219,7 +226,12 @@
                 </ul>
                 <li><b>livello presentazione</b></li>
                 <ul>
-                    <li>risolve eventuali eterogeneita’ del formato dei dati</li>
+                    <li>risolve eventuali eterogeneita’ del formato dei dati tra i nodi della rete.</li>
+                    <ul>
+                    <li>trasformare i dati forniti dal livello di applicazione in un formato standard</li>
+                    <li>gestione della sintassi e della semantica delle informazioni trasmesse, diversamente dagli altri livelli che gestiscono una sequenza di bit.</li>
+                    <li>si occupa di rendere compatibili le rappresentazioni dei dati negli scambi tra computer che utilizzano codifiche diverse (e.g. Endianess &#38; comunicazione indipendente da sistemi operativi differenti tra i due host)</li>
+                    </ul>
                 </ul>
                 <li><b>livello sessione</b></li>
                 <ul>
@@ -231,11 +243,11 @@
                 </ul>
                 <li><b>livello rete</b> (IP, Internet Protocol)</li>
                 <ul>
-                    <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici del mittente e destinatario) e instradamento dei datagrammi TOCHECK pacchetti o datagrammi? Solo IPv4 frammenta?</li>
+                    <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici del mittente e destinatario) e instradamento dei segmenti/datagrammi in pacchetti TOCHECK Solo IPv4 frammenta?</li>
                 </ul>
                 <li><b>livello data link</b> (MAC/LLC)</li>
                 <ul>
-                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei pacchetti tra nodi adiacenti all'host nella rete. TOCHECK A questo livello i datagrammi sono divisi in frame</li>
+                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei frame tra nodi adiacenti all'host nella rete. TOCHECK A questo livello i pacchetti sono divisi in frame</li>
                     <div id="protocolliLivelloDue"><li><b>Tecnologie per schede di rete</b> (protocolli di livello due)</li></div>
                     <ul>
                         <li>Ethernet</li>
