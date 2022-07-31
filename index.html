@@ -57,8 +57,8 @@
                 <li>connettore di rete: interfaccia hardware presente sul dispositivo di rete per il collegamento del dispositivo di rete al mezzo di trasmissione della rete</li>
                 <img src="./assets/scheda-di-rete.png">
             </ul>
-            <li>(&#38; IMEI (nternational Mobile Equipment Identity) It’s a unique number for identifying a device on a mobile network)</li>
-            <li>Il tipo di scheda dipende dalla tecnologia di trasmissione utilizzata, e i protocolli o lo standard utilizzato per la trasmissione le forniscono il nome (vedi <a href="#protocolliLivelloDue">protocolli di livello due</a>).</li>
+            <li>(&#38; IMEI (International Mobile Equipment Identity) It’s a unique number for identifying a device on a mobile network)</li>
+            <li>Il tipo di scheda dipende dalla mezzo di trasmissione dei dati utilizzato, e i protocolli o lo standard utilizzato per la trasmissione le forniscono il nome (vedi <a href="#protocolliLivelloDue">protocolli di livello due</a>).</li>
             <ul>
             <li>protocollo = gestione di un tipo di busta</li>
             </ul>
@@ -76,7 +76,7 @@
     </ul>
     <b>Link trasmissivo</b>
     <ul>
-        <li>(Per propagazione di segnale elettrico tra le varie schede di rete)</li>
+        <li>(Per propagazione e trasmissione di segnale tra le varie schede che realizza l’infrastruttura fisica della rete)</li>
         <li>(per ogni medium un protocollo diverso)</li>
         <li>mezzo fisico di trasmissione sul quale viaggiano (e si propagano) le informazioni sotto forma di segnale analogico.
         Possono essere fili di rame, cavi coassiali (tipo di cavi elettrici), fibre ottiche o l’ambiente nel caso delle onde radio.
@@ -95,13 +95,16 @@
             </ul>
             <li>fibre ottiche</li>
             <ul>
-                <li>cavi dove passano onde luminose (che rimbalzano su specchi) che vengono codificate in base a differenti frequenze di onde le quali per loro natura non si scontrano quindi non si collidono quindi più onde contemporaneamente</li>
-                <li>Presentano le prestazioni migliori (migliaia di Gbit/s), no dispersione del segnale, non subiscono interferenze esterne, ma difficili da maneggiare e costose</li>
+                <li>cavi dove passano onde luminose (che rimbalzano su specchi)(trasmissione di segnali ottici) che vengono codificate in base a differenti frequenze di onde le quali per loro natura non si scontrano quindi non si collidono quindi più onde contemporaneamente</li>
+                <ul>
+                    <li>Una comunicazione ottica è una qualunque forma di telecomunicazione che usa la luce come mezzo di trasmissione.</li>
+                </ul>
+                <li>Presentano le prestazioni migliori per capacita’ di rete (migliaia di Gbit/s), no dispersione del segnale, non subiscono interferenze esterne, ma difficili da maneggiare e costose</li>
             </ul>
             <li><b>Wireless</b> (utopica) trasmissione via etere</li>
             <ul>
                 <li>le reti wireless sono dei broadcast naturali.</li>
-                <li>i segnali vengono propagati tramite onde radio/elettromagnetiche che viaggiano nello spazio</li>
+                <li>i segnali vengono propagati(radiati) tramite onde radio/elettromagnetiche che viaggiano nello spazio</li>
                 <li>Hanno il vantaggio di permettere una comunicazione in mobilita’, ma presentano problemi circa le interferenze (e quindi gli errori), il problema dell’attenuazione del segnale con la distanza (1/(d^n)) e la minor capacita’ di trasmissione.</li>
                 <li>comunicazione tramite antenne speciali che sanno focalizzare le trasmissioni radiofoniche</li>
             </ul>
@@ -121,14 +124,14 @@
         <ul>
             <li><b>infrastruttura</b></li>
             <ul>
-                <li>struttura dei collegamenti fisici tra tutti i dispositivi di una rete</li>
-                <li>Punto a punto: connessione diretta tra due host di una stessa rete</li>
-                (Connessioni multiple)
+                <li>struttura di connessione tramite i collegamenti fisici tra tutti i dispositivi di una rete</li>
+                <li>Punto a punto: connessione diretta tra due host di una stessa rete (semplici regole di comunicazione)</li>
+                (A connessioni multiple)
                 <li>Completamente connessa con cammini ridondanti: esiste un collegamento diretto da ogni host ad ogni host. Massimo grado di ridondanza (possibilità di lavorare con n guasti =&#62; + affidabilità) e tolleranza ai guasti ma costi elevati.</li>
-                <li>Minimamente connessa: esiste un cammino da ogni host ad ogni host che eventualmente passa per nodi intermedi. Costi minimi ma grande rischio di partizionamenti di rete visto l’assenza di ridondanza. (e.g. n host collegati con n-1 collegamenti)(prima a sx ha grado di ridondanza 1 perchè anche se si rompe 1 collegamento gli host rimangono comunque connessi)</li>
+                <li>Minimamente connessa: col minor numero possibile di collegamenti (mST) esiste un cammino da ogni host ad ogni host che eventualmente passa per nodi intermedi. Costi minimi ma grande rischio di partizionamenti di rete visto l’assenza di ridondanza. (e.g. n host collegati con n-1 collegamenti)(prima a sx ha grado di ridondanza 1 perchè anche se si rompe 1 collegamento gli host rimangono comunque connessi)</li>
                 <img src="./assets/p8_2.png">
-                <li>parzialmente connesso (Minimum Spanning Tree o più)</li>
-                <li>Partizione di rete: isole di host non connesse.</li>
+                <ul><li>parzialmente connesso (Minimum Spanning Tree (o più))</li></ul>
+                <li>Partizione di rete: isole di host non connesse; gruppo di host isolati dagli altri.</li>
             </ul>
             <li><b>ad anello (ring)</b></li>
             <ul>
@@ -164,7 +167,7 @@
         <ul>
             <li>Canale punto a punto</li>
             <ul>
-                <li>canale logico riservato (quindi a loro completa disposizione ma molti tempi morti inutilizzati quindi spreco risorse) per far comunicare direttamente due soli host. Non bisogna specificare indirizzo del destinatario</li>
+                <li>canale logico viene riservato (quindi a loro completa disposizione ma molti tempi morti inutilizzati quindi spreco risorse) per far comunicare direttamente due soli host. Non bisogna specificare indirizzo del destinatario, simple access's rules</li>
                 <li><b>filtro passabanda</b></li>
                 <ul>
                     <li>isolare frequenze tramite filtro</li>
@@ -173,19 +176,19 @@
             </ul>
             <li>Canale ad accesso multiplo (broadcast)</li>
             <ul>
-                <li>Tutti i dispositivi ricevono e trasmettono sullo stesso unico canale, e ciò che trasmette uno arriva a tutti. Il canale richiede arbitraggio per evitare collisioni distruttive dovute alla stessa frequenza dei segnali, dovute alla sovrapposizione di segnali che transitano nello stesso momento sul canale, e che porta alla distruzione di entrambi (problematica da gestire anche nei canali punto a punto (signaling vs polling)).</li>
-                <li>Occorre specificare MAC del mittente e destinatario ("da chi e per chi?")</li>
+                <li>Tutti i dispositivi ricevono e trasmettono sullo stesso unico canale, e ciò che trasmette uno arriva a tutti. Il canale richiede arbitraggio per evitare collisioni distruttive dovute alla stessa frequenza dei segnali, quindi alla sovrapposizione di segnali che transitano nello stesso momento sul canale, e che porta alla distruzione di entrambi (problematica da gestire anche nei canali punto a punto (signaling vs polling)).</li>
+                <li>Occorre specificare MAC del mittente e destinatario ("da chi e per chi?")(indirizzamento esplicito per ogni pacchetto trasmesso)</li>
             </ul>
             <img src="./assets/p8_3.png">
         </ul>
     </ul>
-    <b>Reti a commutazione di circuito</b>
+    <b>Reti a commutazione di circuito</b> (circuit switched)
     <ul>
-        <li>Per far comunicare due host si riserva un circuito(insieme) di canali logici end-to-end per tutta la durata della comunicazione (e.g. linea telefonica). Pertanto le linee non sono precostruite bensì sono frequenze in quel momento disponibili tra le varie centrali di commutazione che compongono i circuiti. Se non c'è alcuna frequenza disponibile allora la linea è intasata</li>
-        <li>minor ritardo visto che le risorse sono allocate per tutto il tempo, ma bisogna pagare per tutto il tempo che si è connessi anche se non si trasmettono dati (e.g. momenti di sospiro)</li>
+        <li>Prima di far comunicare due host si crea/si riserva un circuito(insieme) di canali logici end-to-end per tutta la durata della comunicazione (e.g. linea telefonica). Pertanto le linee non sono precostruite bensì sono frequenze in quel momento disponibili tra le varie centrali di commutazione che compongono i circuiti. Se non c'è alcuna frequenza disponibile allora la linea è intasata</li>
+        <li>minor ritardo di comunicazione visto che le risorse sono allocate per tutto il tempo, ma bisogna pagare per tutto il tempo che si è connessi anche se non si trasmettono dati sul canale(e.g. momenti di sospiro)</li>
         <img src="./assets/p8_4.png">
     </ul>
-    <b>Reti a commutazione di pacchetto</b>
+    <b>Reti a commutazione di pacchetto</b> (packet switched (e.g. rete internet))
     <ul>
         <li>I dati vengono divisi in pacchetti indipendenti (ogni pacchetto deve contenere gli indirizzi di mittente e destinatario), spediti sul canale ad accesso multiplo ed affidati a dispositivi chiamati commutatori di pacchetto che li faranno arrivare a destinazione. In questo modo la rete risulta utilizzata al meglio fino a saturazione, si trasmette solo quando si ha necessita’ di farlo e non si allocano risorse inutilmente.</li>
         <li>+ ritardo di comunicazione ma - costi perchè sono allocati più utenti sullo stesso canale condiviso e l'utente paga per numero di pacchetti che ha trasmesso e ricevuto</li>
