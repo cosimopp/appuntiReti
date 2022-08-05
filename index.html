@@ -58,7 +58,7 @@
                 <img src="./assets/scheda-di-rete.png">
             </ul>
             <li>(&#38; IMEI (International Mobile Equipment Identity) It’s a unique number for identifying a device on a mobile network)</li>
-            <li>Il tipo di scheda dipende dalla mezzo di trasmissione dei dati utilizzato, e i protocolli o lo standard utilizzato per la trasmissione le forniscono il nome (vedi <a href="#protocolliLivelloDue">protocolli di livello due</a>).</li>
+            <li>Il tipo di scheda dipende dal mezzo di trasmissione dei dati utilizzato, e i protocolli o lo standard utilizzato per la trasmissione le forniscono il nome (vedi <a href="#protocolliLivelloDue">protocolli di livello due</a>).</li>
             <ul>
             <li>protocollo = gestione di un tipo di busta</li>
             </ul>
@@ -250,17 +250,25 @@
                 </ul>
                 <li><b>livello rete</b> (IP, Internet Protocol) (in Router)</li>
                 <ul>
+                    <li>A livello rete, la rete diventa una rete di (sotto)reti organizzate secondo una visione gerarchica. Si rende necessario l’uso di un indirizzamento logico (tutti non possono sapere il MAC address di tutti). Il protocollo IP definisce un nuovo schema di indirizzamento globale e gerarchico, che consente di identificare univocamente su tutta internet un dispositivo connesso.</li>
+                    TOCHECK  e la sua rete locale di appartenenza? in che misura sottoreti nascondano i dettagli locali
                     <li>Si occupa di frammentazione, indirizzamento (scrivere gli indirizzi logici (IP) del mittente iniziale e destinatario finale(?) (tutto NATtato)), e instradamento dei segmenti/datagrammi in pacchetti verso i nodi intermedi del cammino (i <b>router</b>)
                         <ul>
                             <li>rappresentanti della loro rete e gestori degli host di tale rete che vogliono comunicare con l'esterno o con un altro host di questa rete</li>
-                            <li>smistano i pacchetti delle altre (sotto)reti</li>
+                            <li>smistano(inoltrano) solo i pacchetti, guardando la propria tabella d'inoltro (aggiornata da algoritmo di instradamento)</li>
+                            <li>ack locale tra il router i e (i+1)</li>
+                            <ul>
+                                <li></li>
+                            </ul>
                             <li>store and forward</li>
                         </ul>TOCHECK Solo IPv4 frammenta? mittente e destinatario logici cambiano con instradamento o avviene solo con MAC (prossimo MAC e a chi inviare l'ack(tra MAC c'è invia di ACK?))? (Indirizzo del prossimo MAC) decide il cammino sul quale inviare il pacchetto a seconda dell’indirizzo del destinatario
                     </li> 
                 </ul>
                 <li><b>livello data link</b> (MAC/LLC (LLC = Logical Link Control)) (in Hub/Switch/scheda rete)</li>
                 <ul>
-                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controlla eventuali errori) la corretta trasmissione dei frame tra nodi adiacenti all'host nella rete (LLC). A questo livello i pacchetti sono divisi in frame</li>
+                    <li>A livello data link la rete diventa l’unione di più segmenti di rete (<u>una rete locale</u>) e i dispositivi si identificano nella rete locale con il loro MAC address. Eventualmente ci possono essere segmenti diversi con tecnologie diverse.</li>
+                    <li>Regola l’accesso al mezzo (canale) trasmissivo (arbitraggio, chi trasmette quando), e verifica (controllo e gestione (e.g. correzione) eventuali errori) la corretta trasmissione dei frame tra nodi adiacenti all'host nella rete (LLC), e gestisce la comunicazione tra segmenti di rete con tecnologie differenti. A questo livello i pacchetti sono divisi in frame.</li>
+
                     <div id="protocolliLivelloDue"><li><b>Tecnologie per schede di rete</b> (protocolli di livello due)</li></div>
                     <ul>
                         <li>Ethernet</li>
@@ -280,18 +288,22 @@
                 </ul>
                 <li><b>livello fisico</b> (in scheda rete)</li>
                 <ul>
-                    <li>Si occupa di codifica&#38;trasmissione e decodifica&#38;ricezione dei dati da bit a segnali analogici (tradurre un tipo di segnale in bit, e viceversa) sul canale trasmissivo</li>
-                    <li></li>
+                    <li>A livello fisico la rete e’ vista come un singolo segmento che collega dispositivi che hanno in comune il canale di trasmissione e la tecnologia usata su di esso.</li>
+                    <li>La scheda di rete si occupa di codificare&#38;trasmettere e decodificare&#38;ricevere i dati da bit a segnali analogici (tradurre un tipo di segnale in bit, e viceversa)(digitale&#60;-&#62;analogico&#60;-&#62;analogico&#60;-&#62;digitale) sul canale trasmissivo</li>
                 </ul>
             </ol>
             <img src="./assets/p10_6.png">
             <br>
             <li>In trasmissione, ogni livello riceve dati dai livelli superiori e li inserisce (incapsula) in “buste” con dati aggiuntivi, utili ad istruire il corrispondente livello del dispositivo ricevente</li>
             <li>In ricezione, ogni livello verifica i dati della busta più esterna, agisce di conseguenza, e passa il contenuto della busta ai livelli superiori.</li>
-            <li>TODO router/nodi intermedi pg 9 pdfONE</li>
+            <li>i router intermedi </li>
+            <ul>
+                <li></li>
+            </ul>
             (le code sono gli hashing dei dati aggiuntivi (header) della busta corrispondente per verificare che siano stati ricevuti correttamente (e.g. no errori causati dalle interferenze dell'ambiente))
             <img src="./assets/p11_7.png">
         </ul>
     </ul>
     </body>
-</html>
+</html>	# $(CC) -o paran ex1.c davolib.o $(CFLAGS) #linkaggio sempre in fondo
+
